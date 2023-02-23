@@ -215,6 +215,7 @@
             android:id="@+id/btnDot"
             android:layout_width="0dp"
             android:layout_height="60dp"
+            android:onClick="onDecimalPoint"
             android:layout_margin="2dp"
             android:layout_weight="1"
             android:text="." />

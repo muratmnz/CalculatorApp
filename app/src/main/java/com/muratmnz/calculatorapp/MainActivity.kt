@@ -12,6 +12,9 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
     private var txtInput: TextView? = null
+    var lastNumeric: Boolean = false
+    var lastDot: Boolean = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,9 +29,21 @@ class MainActivity : AppCompatActivity() {
 
     fun onDigit(view: View) {
         txtInput?.append((view as Button).text)
+        //flags when clicked every digits
+        lastNumeric = true
+        lastDot = false
     }
 
     fun onClear(view: View) {
         txtInput?.text = ""
+    }
+
+    fun onDecimalPoint(view: View) {
+        if (lastNumeric && !lastDot) {
+            txtInput?.append(".")
+            //flags
+            lastNumeric = false
+            lastDot = true
+        }
     }
 }
