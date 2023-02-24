@@ -60,7 +60,14 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun isOperatorAdded(value: String): Boolean {
+    private fun removeZeroAfterDot(result: String): String {
+        var value = result
+        if (result.contains(".0"))
+            value = result.substring(0, result.length - 2)
+        return value
+    }
+
+    private fun isOperatorAdded(value: String): Boolean {
         return if (value.startsWith("-")) {
             false
         } else {
@@ -82,20 +89,68 @@ class MainActivity : AppCompatActivity() {
                     prefix = "-"
                     txtValue = txtValue.substring(1)
                 }
+                if (txtValue.contains("-")) {
 
-                //split value from operator
-                val splitValue = txtValue.split("-")
+                    //split value from operator
+                    val splitValue = txtValue.split("-")
 
-                var one = splitValue[0]  //first number
-                var two = splitValue[1]  //second number
+                    var one = splitValue[0]  //first number
+                    var two = splitValue[1]  //second number
 
-                if (prefix.isNotEmpty()){
-                    one = prefix + one
+                    if (prefix.isNotEmpty()) {
+                        one = prefix + one
+                    }
+
+                    txtInput?.text =
+                        removeZeroAfterDot((one.toDouble() - two.toDouble()).toString())
+
+                } else if (txtValue.contains("+")) {
+
+                    //split value from operator
+                    val splitValue = txtValue.split("+")
+
+                    var one = splitValue[0]  //first number
+                    var two = splitValue[1]  //second number
+
+                    if (prefix.isNotEmpty()) {
+                        one = prefix + one
+                    }
+
+                    txtInput?.text =
+                        removeZeroAfterDot((one.toDouble() + two.toDouble()).toString())
+
+                } else if (txtValue.contains("*")) {
+
+                    //split value from operator
+                    val splitValue = txtValue.split("*")
+
+                    var one = splitValue[0]  //first number
+                    var two = splitValue[1]  //second number
+
+                    if (prefix.isNotEmpty()) {
+                        one = prefix + one
+                    }
+
+                    txtInput?.text =
+                        removeZeroAfterDot((one.toDouble() * two.toDouble()).toString())
+
+                } else if (txtValue.contains("/")) {
+
+                    //split value from operator
+                    val splitValue = txtValue.split("/")
+
+                    var one = splitValue[0]  //first number
+                    var two = splitValue[1]  //second number
+
+                    if (prefix.isNotEmpty()) {
+                        one = prefix + one
+                    }
+
+                    txtInput?.text =
+                        removeZeroAfterDot((one.toDouble() / two.toDouble()).toString())
                 }
 
-                txtInput?.text = (one.toDouble() - two.toDouble()).toString()
-
-            } catch (e: java.lang.ArithmeticException) {
+            } catch (e: ArithmeticException) {
                 e.printStackTrace()
             }
         }
