@@ -232,7 +232,7 @@
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:textColor="#E66A68"
-            android:onClick="onOperator"
+            android:onClick="onEqual"
             android:layout_margin="2dp"
             android:layout_weight="1"
             android:text="=" />

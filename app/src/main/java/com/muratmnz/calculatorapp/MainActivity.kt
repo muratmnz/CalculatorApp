@@ -70,5 +70,36 @@ class MainActivity : AppCompatActivity() {
                     || value.contains("-")
         }
     }
+
+    //check last digit is number
+    fun onEqual(view: View) {
+        if (lastNumeric) {
+            var txtValue = txtInput?.text.toString()
+            var prefix = ""
+            try {
+                //if starts number with - and after add second number has - so this solution
+                if (txtValue.startsWith("-")) {
+                    prefix = "-"
+                    txtValue = txtValue.substring(1)
+                }
+
+                //split value from operator
+                val splitValue = txtValue.split("-")
+
+                var one = splitValue[0]  //first number
+                var two = splitValue[1]  //second number
+
+                if (prefix.isNotEmpty()){
+                    one = prefix + one
+                }
+
+                txtInput?.text = (one.toDouble() - two.toDouble()).toString()
+
+            } catch (e: java.lang.ArithmeticException) {
+                e.printStackTrace()
+            }
+        }
+    }
+
 }
 
