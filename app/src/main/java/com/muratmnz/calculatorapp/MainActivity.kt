@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         //flags when clicked every digits
         lastNumeric = true
         lastDot = false
+
     }
 
     fun onClear(view: View) {
@@ -46,4 +47,28 @@ class MainActivity : AppCompatActivity() {
             lastDot = true
         }
     }
+
+    fun onOperator(view: View) {
+        txtInput?.text?.let {
+            // inside if, check txtInput space have must last numeric and there should be no much one operation.
+            // this if does not allow add more operations
+            if (lastNumeric && !isOperatorAdded(it.toString()))
+                txtInput?.append((view as Button).text)
+            lastNumeric = false
+            lastDot = false
+        }
+
+    }
+
+    fun isOperatorAdded(value: String): Boolean {
+        return if (value.startsWith("-")) {
+            false
+        } else {
+            value.contains("/")
+                    || value.contains("*")
+                    || value.contains("+")
+                    || value.contains("-")
+        }
+    }
 }
+
