@@ -42,13 +42,12 @@ class MainActivity : AppCompatActivity() {
     fun changePosNumber(view: View) {
         var number = Integer.parseInt(txtInput?.text.toString())
         try {
-            if (lastNumeric) {
+            if (lastNumeric)
                 if (number < 0) {
                     txtInput?.text = (number * (-1)).toString()
                 } else {
                     txtInput?.text = (number * (-1)).toString()
                 }
-            }
         } catch (e: ArithmeticException) {
             e.printStackTrace()
         }
@@ -163,8 +162,21 @@ class MainActivity : AppCompatActivity() {
 
                     txtInput?.text =
                         removeZeroAfterDot((one.toDouble() / two.toDouble()).toString())
-                }
+                } else if (txtValue.contains("%")) {
 
+                    //split value from operator
+                    val splitValue = txtValue.split("%")
+
+                    var one = splitValue[0]  //first number
+                    var two = splitValue[1]  //second number
+
+                    if (prefix.isNotEmpty()) {
+                        one = prefix + one
+                    }
+
+                    txtInput?.text =
+                        removeZeroAfterDot((one.toDouble() % two.toDouble()).toString())
+                }
             } catch (e: ArithmeticException) {
                 e.printStackTrace()
             }
