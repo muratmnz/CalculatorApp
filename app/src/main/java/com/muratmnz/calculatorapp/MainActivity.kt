@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import com.muratmnz.calculatorapp.databinding.ActivityMainBinding
+import kotlin.math.abs
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,6 +37,21 @@ class MainActivity : AppCompatActivity() {
 
     fun onClear(view: View) {
         txtInput?.text = ""
+    }
+
+    fun changePosNumber(view: View) {
+        var number = Integer.parseInt(txtInput?.text.toString())
+        try {
+            if (lastNumeric) {
+                if (number < 0) {
+                    txtInput?.text = (number * (-1)).toString()
+                } else {
+                    txtInput?.text = (number * (-1)).toString()
+                }
+            }
+        } catch (e: ArithmeticException) {
+            e.printStackTrace()
+        }
     }
 
     fun onDecimalPoint(view: View) {
