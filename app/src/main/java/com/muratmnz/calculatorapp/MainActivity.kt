@@ -1,10 +1,12 @@
 package com.muratmnz.calculatorapp
 
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatDelegate
 import com.muratmnz.calculatorapp.databinding.ActivityMainBinding
 import kotlin.math.abs
 
@@ -19,9 +21,33 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         //view binding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val appSettingsPrefs: SharedPreferences = getSharedPreferences("AppSettingPrefs", 0)
+        val sharedPrefsEdit: SharedPreferences.Editor = appSettingsPrefs.edit()
+        val isNightModeOn: Boolean = appSettingsPrefs.getBoolean("NightMode", false)
+
+        if (isNightModeOn) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
+
+        binding.btnTheme.setOnClickListener {
+            if (isNightModeOn) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                sharedPrefsEdit.putBoolean("NightMode",false)
+                sharedPrefsEdit.apply()
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                sharedPrefsEdit.putBoolean("NightMode",true)
+                sharedPrefsEdit.apply()
+            }
+        }
+
 
         txtInput = findViewById(R.id.resultText)
 
@@ -101,6 +127,7 @@ class MainActivity : AppCompatActivity() {
                 //if starts number with - and after add second number has - so this solution
                 if (txtValue.startsWith("-")) {
                     prefix = "-"
+
                     txtValue = txtValue.substring(1)
                 }
                 if (txtValue.contains("-")) {
@@ -171,7 +198,7 @@ class MainActivity : AppCompatActivity() {
                     var two = splitValue[1]  //second number
 
                     if (prefix.isNotEmpty()) {
-                        one = prefix + one
+                        one = one
                     }
 
                     txtInput?.text =
